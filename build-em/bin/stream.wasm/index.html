@@ -54,17 +54,7 @@
 
             <div id="model-whisper">
                 Whisper model: <span id="model-whisper-status"></span>
-                <button id="fetch-whisper-tiny-en" onclick="loadWhisper('tiny.en')">tiny.en (75 MB)</button>
-                <button id="fetch-whisper-base-en" onclick="loadWhisper('base.en')">base.en (142 MB)</button>
-                <br><br>
-                Quantized models:<br><br>
-                <button id="fetch-whisper-tiny-en-q5_1"   onclick="loadWhisper('tiny-en-q5_1')">tiny.en (Q5_1, 31 MB)</button>
-                <button id="fetch-whisper-base-en-q5_1"   onclick="loadWhisper('base-en-q5_1')">base.en (Q5_1, 57 MB)</button>
                 <span id="fetch-whisper-progress"></span>
-
-                <!--
-                    <input type="file" id="file" name="file" onchange="loadFile(event, 'whisper.bin')" />
-                -->
             </div>
 
             <br>
@@ -141,20 +131,24 @@
                 },
                 postRun: function() {
                     printTextarea('js: Initialized successfully!');
+                    // Cargar el modelo automáticamente al iniciar
+                    loadLocalModel();
                 }
             };
 
-            //
-            // fetch models
-            //
-
-            let dbVersion = 1
-            let dbName    = 'whisper.ggerganov.com';
-            let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
+            function loadLocalModel() {
+                fetch('ggml-base.en.bin')
+                    .then(response => response.arrayBuffer())
+                    .then(buffer => {
+                        const data = new Uint8Array(buffer);
+                        storeFS('whisper.bin', data);
+                    })
+                    .catch(error => {
+                        printTextarea('Error loading model: ' + error);
+                    });
+            }
 
             function storeFS(fname, buf) {
-                // write to WASM file using FS_createDataFile
-                // if the file exists, delete it
                 try {
                     Module.FS_unlink(fname);
                 } catch (e) {
@@ -165,62 +159,11 @@
 
                 printTextarea('storeFS: stored model: ' + fname + ' size: ' + buf.length);
 
-                document.getElementById('model-whisper-status').innerHTML = 'loaded "' + model_whisper + '"!';
-
-                if (model_whisper != null) {
-                    document.getElementById('start').disabled = false;
-                    document.getElementById('stop' ).disabled = true;
-                }
-            }
-
-            function loadWhisper(model) {
-                let urls = {
-                    'tiny.en': 'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en.bin',
-                    'base.en': 'https://whisper.ggerganov.com/ggml-model-whisper-base.en.bin',
-
-                    'tiny-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en-q5_1.bin',
-                    'base-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-base.en-q5_1.bin',
-                };
-
-                let sizes = {
-                    'tiny.en': 75,
-                    'base.en': 142,
-
-                    'tiny-en-q5_1':   31,
-                    'base-en-q5_1':   57,
-                };
-
-                let url     = urls[model];
-                let dst     = 'whisper.bin';
-                let size_mb = sizes[model];
-
-                model_whisper = model;
-
-                document.getElementById('fetch-whisper-tiny-en').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en').style.display = 'none';
-
-                document.getElementById('fetch-whisper-tiny-en-q5_1').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en-q5_1').style.display = 'none';
-
-                document.getElementById('model-whisper-status').innerHTML = 'loading "' + model + '" ... ';
-
-                cbProgress = function(p) {
-                    let el = document.getElementById('fetch-whisper-progress');
-                    el.innerHTML = Math.round(100*p) + '%';
-                };
-
-                cbCancel = function() {
-                    var el;
-                    el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.display = 'inline-block';
-
-                    el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.display = 'inline-block';
-
-                    el = document.getElementById('model-whisper-status');  if (el) el.innerHTML = '';
-                };
-
-                loadRemote(url, dst, size_mb, cbProgress, storeFS, cbCancel, printTextarea);
+                document.getElementById('model-whisper-status').innerHTML = 'loaded!';
+                
+                // Habilitar el botón Start cuando el modelo esté cargado
+                document.getElementById('start').disabled = false;
+                document.getElementById('stop').disabled = true;
             }
 
             //
@@ -228,12 +171,15 @@
             //
 
             const kSampleRate = 16000;
-            const kRestartRecording_s = 120;
-            const kIntervalAudio_ms = 500; // Reducido a 500ms para mejor tiempo real
+            const kRestartRecording_s = 2;  // Reduced to 2 seconds for faster processing
+            const kIntervalAudio_ms = 100;  // Reduced for more frequent updates
 
             var mediaRecorder = null;
             var doRecording = false;
             var startTime = 0;
+            var audioChunks = [];
+            var lastAudioTime = 0;
+            var stream = null;
 
             window.AudioContext = window.AudioContext || window.webkitAudioContext;
             window.OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
@@ -241,9 +187,51 @@
             function stopRecording() {
                 Module.set_status("paused");
                 doRecording = false;
-                audio0 = null;
-                audio = null;
-                context = null;
+                audioChunks = [];
+                if (context) {
+                    context.close();
+                    context = null;
+                }
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+                if (stream) {
+                    stream.getTracks().forEach(function(track) {
+                        track.stop();
+                    });
+                    stream = null;
+                }
+                printTextarea("js: recording stopped");
+                
+                document.getElementById('start').disabled = false;
+                document.getElementById('stop').disabled = true;
+            }
+
+            function processAudio(audioData) {
+                if (!instance) {
+                    printTextarea("js: no whisper instance available");
+                    return;
+                }
+
+                const currentTime = Date.now();
+                if (currentTime - lastAudioTime < 100) {  // Throttle processing
+                    return;
+                }
+                lastAudioTime = currentTime;
+
+                try {
+                    Module.set_audio(instance, audioData);
+                    printTextarea("js: audio sent to whisper, size: " + audioData.length);
+                    
+                    // Force transcription check
+                    const transcribed = Module.get_transcribed();
+                    if (transcribed) {
+                        printTextarea("js: transcription: " + transcribed);
+                        document.getElementById('state-transcribed').innerHTML = transcribed;
+                    }
+                } catch (e) {
+                    printTextarea("js: error processing audio: " + e);
+                }
             }
 
             function startRecording() {
@@ -252,111 +240,81 @@
                         sampleRate: kSampleRate,
                         channelCount: 1,
                         echoCancellation: false,
-                        autoGainControl:  true,
+                        autoGainControl: true,
                         noiseSuppression: true,
                     });
+                    printTextarea("js: audio context created");
                 }
 
-                Module.set_status("");
+                Module.set_status("recording");
+                printTextarea("js: starting recording");
 
                 document.getElementById('start').disabled = true;
                 document.getElementById('stop').disabled = false;
 
                 doRecording = true;
                 startTime = Date.now();
-
-                var chunks = [];
-                var stream = null;
+                audioChunks = [];
 
                 navigator.mediaDevices.getUserMedia({audio: true, video: false})
                     .then(function(s) {
                         stream = s;
-                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder = new MediaRecorder(stream, {
+                            mimeType: 'audio/webm',
+                            audioBitsPerSecond: 16000
+                        });
+
                         mediaRecorder.ondataavailable = function(e) {
-                            chunks.push(e.data);
+                            if (e.data.size > 0) {
+                                audioChunks.push(e.data);
+                                printTextarea("js: received audio chunk of size: " + e.data.size);
 
-                            var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-                            var reader = new FileReader();
+                                var blob = new Blob(audioChunks, { 'type' : 'audio/webm' });
+                                var reader = new FileReader();
 
-                            reader.onload = function(event) {
-                                var buf = new Uint8Array(reader.result);
+                                reader.onload = function(event) {
+                                    var buf = new Uint8Array(reader.result);
+                                    printTextarea("js: processing audio buffer of size: " + buf.length);
 
-                                if (!context) {
-                                    return;
-                                }
-                                context.decodeAudioData(buf.buffer, function(audioBuffer) {
-                                    var offlineContext = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
-                                    var source = offlineContext.createBufferSource();
-                                    source.buffer = audioBuffer;
-                                    source.connect(offlineContext.destination);
-                                    source.start(0);
+                                    if (!context) {
+                                        printTextarea("js: no audio context available");
+                                        return;
+                                    }
 
-                                    offlineContext.startRendering().then(function(renderedBuffer) {
-                                        audio = renderedBuffer.getChannelData(0);
+                                    context.decodeAudioData(buf.buffer, function(audioBuffer) {
+                                        var offlineContext = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
+                                        var source = offlineContext.createBufferSource();
+                                        source.buffer = audioBuffer;
+                                        source.connect(offlineContext.destination);
+                                        source.start(0);
 
-                                        //printTextarea('js: audio recorded, size: ' + audio.length + ', old size: ' + (audio0 == null ? 0 : audio0.length));
-
-                                        var audioAll = new Float32Array(audio0 == null ? audio.length : audio0.length + audio.length);
-                                        if (audio0 != null) {
-                                            audioAll.set(audio0, 0);
-                                        }
-                                        audioAll.set(audio, audio0 == null ? 0 : audio0.length);
-
-                                        if (instance) {
-                                            Module.set_audio(instance, audioAll);
-                                        }
+                                        offlineContext.startRendering().then(function(renderedBuffer) {
+                                            const audioData = renderedBuffer.getChannelData(0);
+                                            printTextarea("js: audio processed, size: " + audioData.length);
+                                            processAudio(audioData);
+                                        });
+                                    }, function(e) {
+                                        printTextarea("js: error decoding audio: " + e);
                                     });
-                                }, function(e) {
-                                    audio = null;
-                                });
-                            }
+                                };
 
-                            reader.readAsArrayBuffer(blob);
+                                reader.readAsArrayBuffer(blob);
+                            }
                         };
 
-                        mediaRecorder.onstop = function(e) {
+                        mediaRecorder.onstop = function() {
                             if (doRecording) {
-                                setTimeout(function() {
-                                    startRecording();
-                                });
+                                printTextarea("js: restarting recording");
+                                setTimeout(startRecording, 100);
                             }
                         };
 
                         mediaRecorder.start(kIntervalAudio_ms);
+                        printTextarea("js: media recorder started with interval: " + kIntervalAudio_ms);
                     })
                     .catch(function(err) {
-                        printTextarea('js: error getting audio stream: ' + err);
+                        printTextarea("js: error getting audio stream: " + err);
                     });
-
-                var interval = setInterval(function() {
-                    if (!doRecording) {
-                        clearInterval(interval);
-                        mediaRecorder.stop();
-                        stream.getTracks().forEach(function(track) {
-                            track.stop();
-                        });
-
-                        document.getElementById('start').disabled = false;
-                        document.getElementById('stop').disabled  = true;
-
-                        mediaRecorder = null;
-                    }
-
-                    // if audio length is more than kRestartRecording_s seconds, restart recording
-                    if (audio != null && audio.length > kSampleRate*kRestartRecording_s) {
-                        if (doRecording) {
-                            //printTextarea('js: restarting recording');
-
-                            clearInterval(interval);
-                            audio0 = audio;
-                            audio = null;
-                            mediaRecorder.stop();
-                            stream.getTracks().forEach(function(track) {
-                                track.stop();
-                            });
-                        }
-                    }
-                }, 100);
             }
 
             //
@@ -373,8 +331,42 @@
 
                     if (instance) {
                         printTextarea("js: whisper initialized, instance: " + instance);
-                        // Configurar parámetros para mejor rendimiento en tiempo real
-                        Module.set_status("optimizing for real-time...");
+                        
+                        // First set the thread count before any other parameters
+                        Module.set_n_threads(2);
+                        printTextarea("js: set thread count to 2");
+                        
+                        // Then set other parameters
+                        Module.set_params(instance, {
+                            language: "en",
+                            translate: false,
+                            n_threads: 2,
+                            offset_ms: 0,
+                            duration_ms: 0,
+                            max_tokens: 32,
+                            audio_ctx: 0,
+                            vad_thold: 0.3,  // Lowered for better sensitivity
+                            freq_thold: 100.0,  // Lowered for better detection
+                            speed_up: false,
+                            print_progress: true,
+                            print_special: false,
+                            print_realtime: true,
+                            print_timestamps: false,
+                            token_timestamps: false,
+                            split_on_word: false,
+                            max_len: 0,
+                            max_text_tokens: 0,
+                            suppress_blank: false,  // Changed to false to see all output
+                            suppress_non_speech_tokens: false,  // Changed to false to see all output
+                            initial_prompt: "",
+                            prompt_tokens: null,
+                            prefix: null,
+                            temperature: 0.0,
+                            compression_ratio_threshold: 2.4,
+                            logprob_threshold: -1.0,
+                            no_speech_threshold: 0.6
+                        });
+                        printTextarea("js: whisper parameters set");
                     }
                 }
 
@@ -387,13 +379,15 @@
 
                 intervalUpdate = setInterval(function() {
                     var transcribed = Module.get_transcribed();
+                    printTextarea("js: checking transcription: " + (transcribed ? "has content" : "null"));
 
                     if (transcribed != null && transcribed.length > 1) {
+                        printTextarea("js: new transcription: " + transcribed);
                         transcribedAll += transcribed + '<br>';
                         nLines++;
 
-                        // if more than 10 lines, remove the first line
-                        if (nLines > 10) {
+                        // Keep fewer lines in memory
+                        if (nLines > 3) {
                             var i = transcribedAll.indexOf('<br>');
                             if (i > 0) {
                                 transcribedAll = transcribedAll.substring(i + 4);
@@ -404,7 +398,7 @@
 
                     document.getElementById('state-status').innerHTML = Module.get_status();
                     document.getElementById('state-transcribed').innerHTML = transcribedAll;
-                }, 50); // Reducido de 100 a 50 para actualización más frecuente
+                }, 250);
             }
 
             function onStop() {

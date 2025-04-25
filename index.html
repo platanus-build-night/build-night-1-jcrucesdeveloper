@@ -1,0 +1,65 @@
+var kSampleRate = 16000;
+var kRestartRecording_s = 30;
+var kIntervalAudio_ms = 500; // Reduced from default to improve responsiveness
+
+// Initialize audio context and media recorder
+var context = null;
+var mediaRecorder = null;
+var audioStack = [];
+var chunks = [];
+var stream = null;
+var audio = null;
+var audio0 = null;
+var doRecording = false;
+var instance = null;
+
+mediaRecorder.start(kIntervalAudio_ms);
+
+var interval = setInterval(function() {
+    if (!doRecording) {
+        clearInterval(interval);
+        mediaRecorder.stop();
+        stream.getTracks().forEach(function(track) {
+            track.stop();
+        });
+
+        document.getElementById('start').disabled = false;
+        document.getElementById('stop').disabled  = true;
+
+        mediaRecorder = null;
+    }
+
+    // Process shorter audio segments for better real-time performance
+    if (audio != null && audio.length > kSampleRate * 3) { // Reduced from kRestartRecording_s to 3 seconds
+        if (doRecording) {
+            clearInterval(interval);
+            audio0 = audio;
+            audio = null;
+            mediaRecorder.stop();
+            stream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        }
+    }
+}, 50); // Reduced interval check from 100ms to 50ms
+
+intervalUpdate = setInterval(function() {
+    var transcribed = Module.get_transcribed();
+
+    if (transcribed != null && transcribed.length > 1) {
+        transcribedAll += transcribed + '<br>';
+        nLines++;
+
+        // if more than 10 lines, remove the first line
+        if (nLines > 10) {
+            var i = transcribedAll.indexOf('<br>');
+            if (i > 0) {
+                transcribedAll = transcribedAll.substring(i + 4);
+                nLines--;
+            }
+        }
+    }
+
+    document.getElementById('state-status').innerHTML = Module.get_status();
+    document.getElementById('state-transcribed').innerHTML = transcribedAll;
+}, 25); // Reduced from 50ms to 25ms for more frequent UI updates 
