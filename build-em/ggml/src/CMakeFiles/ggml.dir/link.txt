@@ -1,2 +1,0 @@
-/home/jaco/Downloads/emsdk/upstream/emscripten/emar qc libggml.a "CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o"
-/home/jaco/Downloads/emsdk/upstream/emscripten/emranlib libggml.a
