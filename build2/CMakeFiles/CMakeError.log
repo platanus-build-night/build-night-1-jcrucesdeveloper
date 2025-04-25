@@ -1,0 +1,210 @@
+Detecting C OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_55829/fast && /usr/bin/make -f CMakeFiles/cmTC_55829.dir/build.make CMakeFiles/cmTC_55829.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/emcc   -pthread -fopenmp=libomp -v   -std=gnu11 -o CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o   -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp=libomp -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.c -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -std=gnu11 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fignore-exceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o -x c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+emcc: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp=libomp -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_55829.dir/build.make:66: CMakeFiles/cmTC_55829.dir/OpenMPTryFlag.c.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_55829/fast] Error 2
+
+
+
+Detecting C OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_b6d60/fast && /usr/bin/make -f CMakeFiles/cmTC_b6d60.dir/build.make CMakeFiles/cmTC_b6d60.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/emcc   -pthread -fopenmp=libiomp5 -v   -std=gnu11 -o CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o   -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp=libiomp5 -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.c -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -std=gnu11 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fignore-exceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o -x c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+emcc: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp=libiomp5 -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_b6d60.dir/build.make:66: CMakeFiles/cmTC_b6d60.dir/OpenMPTryFlag.c.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_b6d60/fast] Error 2
+
+
+
+Detecting C OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_78f6e/fast && /usr/bin/make -f CMakeFiles/cmTC_78f6e.dir/build.make CMakeFiles/cmTC_78f6e.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/emcc   -pthread -fopenmp -v   -std=gnu11 -o CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o   -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.c -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -std=gnu11 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fignore-exceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o -x c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+emcc: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -fopenmp -v -std=gnu11 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.c -o CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_78f6e.dir/build.make:66: CMakeFiles/cmTC_78f6e.dir/OpenMPTryFlag.c.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_78f6e/fast] Error 2
+
+
+
+Detecting CXX OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ea9fc/fast && /usr/bin/make -f CMakeFiles/cmTC_ea9fc.dir/build.make CMakeFiles/cmTC_ea9fc.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/em++    -pthread -Wno-deprecated -fopenmp=libomp -v   -std=gnu++17 -o CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang++" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp=libomp -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.cpp -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -Wno-deprecated -std=gnu++17 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fcxx-exceptions -fignore-exceptions -fexceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o -x c++ /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+em++: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang++ -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp=libomp -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_ea9fc.dir/build.make:66: CMakeFiles/cmTC_ea9fc.dir/OpenMPTryFlag.cpp.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_ea9fc/fast] Error 2
+
+
+
+Detecting CXX OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_87656/fast && /usr/bin/make -f CMakeFiles/cmTC_87656.dir/build.make CMakeFiles/cmTC_87656.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/em++    -pthread -Wno-deprecated -fopenmp=libiomp5 -v   -std=gnu++17 -o CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang++" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp=libiomp5 -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.cpp -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -Wno-deprecated -std=gnu++17 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fcxx-exceptions -fignore-exceptions -fexceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o -x c++ /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+em++: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang++ -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp=libiomp5 -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_87656.dir/build.make:66: CMakeFiles/cmTC_87656.dir/OpenMPTryFlag.cpp.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_87656/fast] Error 2
+
+
+
+Detecting CXX OpenMP failed with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_99ca1/fast && /usr/bin/make -f CMakeFiles/cmTC_99ca1.dir/build.make CMakeFiles/cmTC_99ca1.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/em++    -pthread -Wno-deprecated -fopenmp -v   -std=gnu++17 -o CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang++" -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o
+clang version 14.0.0 (https://github.com/llvm/llvm-project 782c0dd1a1c235afb09a34e7da4a1267ead14765)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /home/jaco/Downloads/emsdk/upstream/bin
+ (in-process)
+ "/home/jaco/Downloads/emsdk/upstream/bin/clang-14" -cc1 -triple wasm32-unknown-emscripten -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.cpp -mrelocation-model static -mframe-pointer=none -ffp-contract=on -fno-rounding-math -mconstructor-aliases -target-feature +atomics -target-feature +bulk-memory -target-feature +mutable-globals -target-feature +sign-ext -target-cpu generic -debugger-tuning=gdb -v -fcoverage-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -resource-dir /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0 -D EMSCRIPTEN -D __EMSCRIPTEN_major__=3 -D __EMSCRIPTEN_minor__=1 -D __EMSCRIPTEN_tiny__=2 -D _LIBCPP_ABI_VERSION=2 -isysroot /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1 -internal-isystem /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten -internal-isystem /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include -Werror=implicit-function-declaration -Wno-deprecated -std=gnu++17 -fdebug-compilation-dir=/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp -ferror-limit 19 -fvisibility default -fopenmp -fopenmp-target-new-runtime -pthread -fgnuc-version=4.2.1 -fcxx-exceptions -fignore-exceptions -fexceptions -iwithsysroot/include/SDL -iwithsysroot/include/compat -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -o CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o -x c++ /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp
+clang -cc1 version 14.0.0 based upon LLVM 14.0.0git default target x86_64-unknown-linux-gnu
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten/c++/v1"
+ignoring nonexistent directory "/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/wasm32-emscripten"
+#include "..." search starts here:
+#include <...> search starts here:
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/SDL
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/compat
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include/c++/v1
+ /home/jaco/Downloads/emsdk/upstream/lib/clang/14.0.0/include
+ /home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot/include
+End of search list.
+/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+#include <omp.h>
+         ^~~~~~~
+1 error generated.
+em++: error: '/home/jaco/Downloads/emsdk/upstream/bin/clang++ -target wasm32-unknown-emscripten -DEMSCRIPTEN -fignore-exceptions -fvisibility=default -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr -D__EMSCRIPTEN_major__=3 -D__EMSCRIPTEN_minor__=1 -D__EMSCRIPTEN_tiny__=2 -D_LIBCPP_ABI_VERSION=2 -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/SDL --sysroot=/home/jaco/Downloads/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/compat -pthread -Wno-deprecated -fopenmp -v -std=gnu++17 -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp -o CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o' failed (returned 1)
+make[1]: *** [CMakeFiles/cmTC_99ca1.dir/build.make:66: CMakeFiles/cmTC_99ca1.dir/OpenMPTryFlag.cpp.o] Error 1
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_99ca1/fast] Error 2
+
+
+

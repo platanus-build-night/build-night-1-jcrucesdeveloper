@@ -1,0 +1,147 @@
+[
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/emcc -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_C.rsp    -pthread -O3 -DNDEBUG   -msimd128 -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -std=gnu11 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o   -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu.c",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu.c"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu-aarch64.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-aarch64.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-aarch64.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu-hbm.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-hbm.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-hbm.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/emcc -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_C.rsp    -pthread -O3 -DNDEBUG   -msimd128 -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -std=gnu11 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu-quants.c.o   -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-quants.c",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-quants.c"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu-traits.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-traits.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ggml-cpu-traits.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/amx/amx.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/amx/amx.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/amx/mmq.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/amx/mmq.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/binary-ops.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/binary-ops.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/unary-ops.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/unary-ops.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/vec.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/vec.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU_AARCH64 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-cpu.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -msimd128 -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ops.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-cpu/ops.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -DGGML_USE_CPU -D_XOPEN_SOURCE=600 @CMakeFiles/ggml.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-backend-reg.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-backend-reg.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/emcc -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_C.rsp    -pthread -O3 -DNDEBUG   -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -std=gnu11 -o CMakeFiles/ggml-base.dir/ggml.c.o   -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml.c",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml.c"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/emcc -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_C.rsp    -pthread -O3 -DNDEBUG   -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -std=gnu11 -o CMakeFiles/ggml-base.dir/ggml-alloc.c.o   -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-alloc.c",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-alloc.c"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-base.dir/ggml-backend.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-backend.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-backend.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-base.dir/ggml-opt.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-opt.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-opt.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-base.dir/ggml-threading.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-threading.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-threading.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/emcc -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_C.rsp    -pthread -O3 -DNDEBUG   -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -std=gnu11 -o CMakeFiles/ggml-base.dir/ggml-quants.c.o   -c /home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-quants.c",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/ggml-quants.c"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_SCHED_MAX_COPIES=4 -D_XOPEN_SOURCE=600 @CMakeFiles/ggml-base.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -std=gnu++17 -o CMakeFiles/ggml-base.dir/gguf.cpp.o -c /home/jaco/workspace-platanus-build-night/local/ggml/src/gguf.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/ggml/src/gguf.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/src",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/whisper.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++11 -o CMakeFiles/whisper.dir/whisper.cpp.o -c /home/jaco/workspace-platanus-build-night/local/src/whisper.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/src/whisper.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/common.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG -fPIC   -std=gnu++11 -o CMakeFiles/common.dir/common.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/common.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/common.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/common.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG -fPIC   -std=gnu++11 -o CMakeFiles/common.dir/common-ggml.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/common-ggml.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/common-ggml.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/common.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG -fPIC   -std=gnu++11 -o CMakeFiles/common.dir/common-whisper.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/common-whisper.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/common-whisper.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/common.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG -fPIC   -std=gnu++11 -o CMakeFiles/common.dir/grammar-parser.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/grammar-parser.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/grammar-parser.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples/whisper.wasm",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/libmain.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -std=gnu++11 -o CMakeFiles/libmain.dir/emscripten.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/whisper.wasm/emscripten.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/whisper.wasm/emscripten.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples/stream.wasm",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/libstream.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -std=gnu++11 -o CMakeFiles/libstream.dir/emscripten.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/stream.wasm/emscripten.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/stream.wasm/emscripten.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples/command.wasm",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/libcommand.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -std=gnu++11 -o CMakeFiles/libcommand.dir/emscripten.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/command.wasm/emscripten.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/command.wasm/emscripten.cpp"
+},
+{
+  "directory": "/home/jaco/workspace-platanus-build-night/local/build2/examples/bench.wasm",
+  "command": "/home/jaco/Downloads/emsdk/upstream/emscripten/em++  -DGGML_USE_CPU @CMakeFiles/libbench.dir/includes_CXX.rsp  -pthread -Wno-deprecated -O3 -DNDEBUG   -std=gnu++11 -o CMakeFiles/libbench.dir/emscripten.cpp.o -c /home/jaco/workspace-platanus-build-night/local/examples/bench.wasm/emscripten.cpp",
+  "file": "/home/jaco/workspace-platanus-build-night/local/examples/bench.wasm/emscripten.cpp"
+}
+]

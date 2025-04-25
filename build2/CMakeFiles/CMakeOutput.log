@@ -1,0 +1,36 @@
+The target system is: Emscripten - 1 - x86
+The host system is: Linux - 5.15.0-138-generic - x86_64
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD succeeded with the following output:
+Change Dir: /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_b1e5a/fast && /usr/bin/make -f CMakeFiles/cmTC_b1e5a.dir/build.make CMakeFiles/cmTC_b1e5a.dir/build
+make[1]: Entering directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b1e5a.dir/src.c.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/emcc   -pthread -DCMAKE_HAVE_LIBC_PTHREAD   -std=gnu11 -o CMakeFiles/cmTC_b1e5a.dir/src.c.o   -c /home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp/src.c
+shared:INFO: (Emscripten: Running sanity checks)
+Linking C executable cmTC_b1e5a.js
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b1e5a.dir/link.txt --verbose=1
+/home/jaco/Downloads/emsdk/upstream/emscripten/emcc    -pthread -DCMAKE_HAVE_LIBC_PTHREAD   -s TOTAL_STACK=5242880  @CMakeFiles/cmTC_b1e5a.dir/objects1.rsp  -o cmTC_b1e5a.js 
+make[1]: Leaving directory '/home/jaco/workspace-platanus-build-night/local/build2/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+

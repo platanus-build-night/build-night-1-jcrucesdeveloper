@@ -1,0 +1,36 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/jaco/workspace-platanus-build-night/local/examples/common-ggml.cpp" "/home/jaco/workspace-platanus-build-night/local/build2/examples/CMakeFiles/common.dir/common-ggml.cpp.o"
+  "/home/jaco/workspace-platanus-build-night/local/examples/common-whisper.cpp" "/home/jaco/workspace-platanus-build-night/local/build2/examples/CMakeFiles/common.dir/common-whisper.cpp.o"
+  "/home/jaco/workspace-platanus-build-night/local/examples/common.cpp" "/home/jaco/workspace-platanus-build-night/local/build2/examples/CMakeFiles/common.dir/common.cpp.o"
+  "/home/jaco/workspace-platanus-build-night/local/examples/grammar-parser.cpp" "/home/jaco/workspace-platanus-build-night/local/build2/examples/CMakeFiles/common.dir/grammar-parser.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "Clang")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_CXX
+  "GGML_USE_CPU"
+  )
+
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../examples"
+  "../src/."
+  "../src/../include"
+  "../ggml/src/../include"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/jaco/workspace-platanus-build-night/local/build2/src/CMakeFiles/whisper.dir/DependInfo.cmake"
+  "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src/CMakeFiles/ggml.dir/DependInfo.cmake"
+  "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src/CMakeFiles/ggml-cpu.dir/DependInfo.cmake"
+  "/home/jaco/workspace-platanus-build-night/local/build2/ggml/src/CMakeFiles/ggml-base.dir/DependInfo.cmake"
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

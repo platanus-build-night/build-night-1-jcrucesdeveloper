@@ -6,7 +6,7 @@ from pathlib import Path
 import urllib.parse
 
 SCRIPT_DIR = Path(__file__).parent.absolute()
-DIRECTORY = os.path.join(SCRIPT_DIR, "../build-em/bin")
+DIRECTORY = os.path.join(SCRIPT_DIR, "../build2/bin")
 DIRECTORY = os.path.abspath(DIRECTORY)
 
 # The context root we want for all applications
@@ -88,11 +88,18 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def end_headers(self):
-        # Add required headers for SharedArrayBuffer
+        # Add required headers for SharedArrayBuffer and COOP/COEP
         self.send_header("Cross-Origin-Opener-Policy", "same-origin")
         self.send_header("Cross-Origin-Embedder-Policy", "require-corp")
+        self.send_header("Cross-Origin-Resource-Policy", "cross-origin")
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
         super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
 
 PORT = 8000
 
