@@ -15,13 +15,15 @@ defineProps({
   <div :class="['flex', isUser ? 'justify-end' : 'justify-start']">
     <div 
       :class="[
-        'max-w-[70%] p-3 rounded-lg',
+        'max-w-[70%] p-4 rounded-lg shadow-sm',
         isUser 
-          ? 'bg-blue-600 text-white' 
-          : 'bg-gray-200 text-gray-800'
+          ? 'bg-gray-800 text-white rounded-br-none' 
+          : 'bg-gray-50 text-gray-800 rounded-bl-none border border-gray-200'
       ]"
     >
-      {{ text }}
+      <div class="text-sm leading-relaxed">
+        {{ text }}
+      </div>
     </div>
   </div>
 </template> 

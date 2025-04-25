@@ -15,20 +15,27 @@ const selectChat = (chat) => {
 </script>
 
 <template>
-  <div class="w-64 h-screen bg-gray-800 text-white p-4">
-    <div class="mb-4">
-      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+  <div class="h-screen bg-white border-r border-gray-200 p-6">
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">Whisper Note Taker</h1>
+      <button class="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 px-4 rounded-lg transition-colors duration-200">
         Nueva nota
       </button>
     </div>
     
-    <div class="space-y-2">
+    <div class="space-y-3">
       <div v-for="chat in savedChats" 
            :key="chat.id"
            @click="selectChat(chat)"
-           :class="['p-3 rounded-lg cursor-pointer hover:bg-gray-700', 
-                   { 'bg-gray-700': selectedChat?.id === chat.id }]">
-        {{ chat.title }}
+           :class="[
+             'p-4 rounded-lg cursor-pointer transition-colors duration-200',
+             selectedChat?.id === chat.id 
+               ? 'bg-gray-100 border border-gray-200' 
+               : 'hover:bg-gray-50'
+           ]">
+        <div class="text-gray-800 font-medium">
+          {{ chat.title }}
+        </div>
       </div>
     </div>
   </div>
