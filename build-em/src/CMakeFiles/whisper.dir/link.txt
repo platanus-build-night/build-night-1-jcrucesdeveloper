@@ -1,0 +1,2 @@
+/home/jaco/Downloads/emsdk/upstream/emscripten/emar qc libwhisper.a CMakeFiles/whisper.dir/whisper.cpp.o
+/home/jaco/Downloads/emsdk/upstream/emscripten/emranlib libwhisper.a
