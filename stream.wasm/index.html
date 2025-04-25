@@ -30,6 +30,7 @@
     <body>
         <div id="main-container">
             <b>stream : Real-time Whisper transcription in WebAssembly</b>
+            asdflkasjdjk
 
             <br><br>
 
@@ -53,12 +54,12 @@
 
             <div id="model-whisper">
                 Whisper model: <span id="model-whisper-status"></span>
-                <button id="fetch-whisper-tiny-en" onclick="loadWhisper('tiny.en')">tiny.en (75 MB)</button>
-                <button id="fetch-whisper-base-en" onclick="loadWhisper('base.en')">base.en (142 MB)</button>
+                <button id="fetch-whisper-tiny-en" onclick="loadWhisper('tiny.en')" style="display: none">tiny.en (75 MB)</button>
+                <button id="fetch-whisper-base-en" onclick="loadWhisper('base.en')" style="display: none">base.en (142 MB)</button>
                 <br><br>
                 Quantized models:<br><br>
-                <button id="fetch-whisper-tiny-en-q5_1"   onclick="loadWhisper('tiny-en-q5_1')">tiny.en (Q5_1, 31 MB)</button>
-                <button id="fetch-whisper-base-en-q5_1"   onclick="loadWhisper('base-en-q5_1')">base.en (Q5_1, 57 MB)</button>
+                <button id="fetch-whisper-tiny-en-q5_1" onclick="loadWhisper('tiny-en-q5_1')" style="display: none">tiny.en (Q5_1, 31 MB)</button>
+                <button id="fetch-whisper-base-en-q5_1" onclick="loadWhisper('base-en-q5_1')" style="display: none">base.en (Q5_1, 57 MB)</button>
                 <span id="fetch-whisper-progress"></span>
 
                 <!--
@@ -131,15 +132,21 @@
                 print: printTextarea,
                 printErr: printTextarea,
                 setStatus: function(text) {
+                    console.log('Module.setStatus:', text);
                     printTextarea('js: ' + text);
                 },
                 monitorRunDependencies: function(left) {
+                    console.log('Module.monitorRunDependencies:', left);
                 },
                 preRun: function() {
+                    console.log('Module.preRun: Preparing ...');
                     printTextarea('js: Preparing ...');
                 },
                 postRun: function() {
+                    console.log('Module.postRun: Initialized successfully!');
                     printTextarea('js: Initialized successfully!');
+                    // Load the model automatically after initialization
+                    loadWhisper('base.en');
                 }
             };
 
@@ -152,74 +159,63 @@
             let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
 
             function storeFS(fname, buf) {
+                console.log('storeFS: starting to store model...');
                 // write to WASM file using FS_createDataFile
                 // if the file exists, delete it
                 try {
                     Module.FS_unlink(fname);
+                    console.log('storeFS: removed existing file');
                 } catch (e) {
-                    // ignore
+                    console.log('storeFS: no existing file to remove');
                 }
 
-                Module.FS_createDataFile("/", fname, buf, true, true);
+                try {
+                    Module.FS_createDataFile("/", fname, buf, true, true);
+                    console.log('storeFS: created new file successfully');
+                } catch (e) {
+                    console.error('storeFS: error creating file:', e);
+                }
 
                 printTextarea('storeFS: stored model: ' + fname + ' size: ' + buf.length);
 
                 document.getElementById('model-whisper-status').innerHTML = 'loaded "' + model_whisper + '"!';
 
-                if (model_whisper != null) {
-                    document.getElementById('start').disabled = false;
-                    document.getElementById('stop' ).disabled = true;
-                }
+                // Enable the Start button when model is loaded
+                console.log('storeFS: enabling start button');
+                document.getElementById('start').disabled = false;
+                document.getElementById('stop').disabled = true;
             }
 
             function loadWhisper(model) {
-                let urls = {
-                    'tiny.en': 'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en.bin',
-                    'base.en': 'https://whisper.ggerganov.com/ggml-model-whisper-base.en.bin',
+                console.log('loadWhisper: starting to load model...');
+                // Use local model from models folder
+                let dst = 'whisper.bin';
+                model_whisper = 'base.en';
 
-                    'tiny-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en-q5_1.bin',
-                    'base-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-base.en-q5_1.bin',
-                };
+                document.getElementById('model-whisper-status').innerHTML = 'loading local model ...';
 
-                let sizes = {
-                    'tiny.en': 75,
-                    'base.en': 142,
-
-                    'tiny-en-q5_1':   31,
-                    'base-en-q5_1':   57,
-                };
-
-                let url     = urls[model];
-                let dst     = 'whisper.bin';
-                let size_mb = sizes[model];
-
-                model_whisper = model;
-
-                document.getElementById('fetch-whisper-tiny-en').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en').style.display = 'none';
-
-                document.getElementById('fetch-whisper-tiny-en-q5_1').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en-q5_1').style.display = 'none';
-
-                document.getElementById('model-whisper-status').innerHTML = 'loading "' + model + '" ... ';
-
-                cbProgress = function(p) {
-                    let el = document.getElementById('fetch-whisper-progress');
-                    el.innerHTML = Math.round(100*p) + '%';
-                };
-
-                cbCancel = function() {
-                    var el;
-                    el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.display = 'inline-block';
-
-                    el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.display = 'inline-block';
-
-                    el = document.getElementById('model-whisper-status');  if (el) el.innerHTML = '';
-                };
-
-                loadRemote(url, dst, size_mb, cbProgress, storeFS, cbCancel, printTextarea);
+                // Load the model file using fetch from the same directory
+                console.log('loadWhisper: fetching model from ggml-base.en.bin');
+                fetch('ggml-base.en.bin')
+                    .then(response => {
+                        console.log('loadWhisper: fetch response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.status);
+                        }
+                        return response.arrayBuffer();
+                    })
+                    .then(buffer => {
+                        console.log('loadWhisper: got buffer, size:', buffer.byteLength);
+                        const uint8Array = new Uint8Array(buffer);
+                        storeFS(dst, uint8Array);
+                    })
+                    .catch(error => {
+                        console.error('loadWhisper: error loading model:', error);
+                        printTextarea('js: error loading local model: ' + error);
+                        document.getElementById('model-whisper-status').innerHTML = 'error loading model';
+                        // Keep the Start button disabled if there's an error
+                        document.getElementById('start').disabled = true;
+                    });
             }
 
             //

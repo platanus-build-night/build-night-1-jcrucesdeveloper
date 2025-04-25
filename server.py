@@ -20,7 +20,7 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         # Redirect root to the context root
         if self.path == '/':
             self.send_response(302)
-            self.send_header('Location', CONTEXT_ROOT + '/')
+            self.send_header('Location', CONTEXT_ROOT + '/stream.wasm/')
             self.end_headers()
             return
 
