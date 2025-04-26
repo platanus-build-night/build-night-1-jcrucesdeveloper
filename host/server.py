@@ -6,7 +6,7 @@ from pathlib import Path
 import urllib.parse
 
 SCRIPT_DIR = Path(__file__).parent.absolute()
-DIRECTORY = os.path.join(SCRIPT_DIR, "../build2/bin")
+DIRECTORY = os.path.join(SCRIPT_DIR, "../build/bin")
 DIRECTORY = os.path.abspath(DIRECTORY)
 
 # The context root we want for all applications
