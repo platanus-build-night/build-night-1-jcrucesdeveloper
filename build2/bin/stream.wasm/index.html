@@ -328,11 +328,13 @@
                     var transcribed = Module.get_transcribed();
 
                     if (transcribed != null && transcribed.length > 1) {
-                        transcribedAll = `<div class="flex justify-start"><div class="bg-gray-100 rounded-xl rounded-tl-none px-2 max-w-[200px] inline-block"><div class="text-xs leading-none text-gray-700 text-left">Estoy escuchando 👂 👀</div></div></div>`;
+                        var newMessage = document.createElement('div');
+                        newMessage.className = 'flex';
+                        newMessage.innerHTML = `<div class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left">${transcribed}</div>`;
+                        document.getElementById('whisper-chat').appendChild(newMessage);
                     }
 
                     document.getElementById('state-status').innerHTML = Module.get_status();
-                    document.getElementById('state-transcribed').innerHTML = transcribedAll;
                 }, 100);
             }
 
