@@ -2,9 +2,9 @@ class TestFormatter {
     static format(text) {
         const lowerText = text.toLowerCase();
         
-        // Helper function to clean text from keywords
-        const cleanText = (text) => {
-            return text
+        // Helper function to clean text from keywords and capitalize first letter
+        const cleanText = (text, shouldCapitalize = false) => {
+            let cleaned = text
                 .replace(/\b(1|one)\b/gi, '')
                 .replace(/\b(2|two)\b/gi, '')
                 .replace(/\b(3|three)\b/gi, '')
@@ -13,25 +13,32 @@ class TestFormatter {
                 .replace(/\b(link|url)\b/gi, '')
                 .replace(/\b(quote|block)\b/gi, '')
                 .replace(/\b(code|pre)\b/gi, '')
+                .replace(/\s+/g, ' ')  // Reemplaza múltiples espacios por uno solo
                 .trim();
+            
+            if (shouldCapitalize && cleaned.length > 0) {
+                cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+            }
+            
+            return cleaned;
         };
         
         // Check for headings
         if (lowerText.includes('1') || lowerText.includes('one')) {
             const h1 = document.createElement('h1');
-            h1.textContent = cleanText(text);
+            h1.textContent = cleanText(text, true);
             h1.className = 'text-2xl font-bold text-gray-800 mb-3 mt-4 tracking-tight';
             return h1;
         }
         if (lowerText.includes('2') || lowerText.includes('two')) {
             const h2 = document.createElement('h2');
-            h2.textContent = cleanText(text);
+            h2.textContent = cleanText(text, true);
             h2.className = 'text-xl font-semibold text-gray-700 mb-2 mt-3';
             return h2;
         }
         if (lowerText.includes('3') || lowerText.includes('three')) {
             const h3 = document.createElement('h3');
-            h3.textContent = cleanText(text);
+            h3.textContent = cleanText(text, true);
             h3.className = 'text-lg font-medium text-gray-600 mb-2 mt-2';
             return h3;
         }
