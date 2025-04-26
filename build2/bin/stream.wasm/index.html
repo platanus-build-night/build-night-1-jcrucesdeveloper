@@ -7,22 +7,15 @@
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <script src="../coi-serviceworker.js"></script>
         <link rel="icon" href="data:,">
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            }
-        </style>
     </head>
     <body class="bg-gray-50">
         <div class="flex h-screen">
             <!-- Sidebar Container -->
-            <div id="sidebar-container" class="w-1/3 min-w-[300px] h-full"></div>
+            <div id="sidebar-container" class="w-1/4 min-w-[300px] h-full"></div>
 
             <!-- Main Content -->
-            <div class="flex-2 grow-2 p-6 h-full">
-                <div class="grid grid-rows-[1fr_200px] grid-cols-2 gap-6 h-full">
+            <div class="flex-2 grow-2 p-6">
+                <div class="grid grid-cols-2 gap-6">
                     <!-- Whisper Listener -->
                     <div id="chat-area-container" class="bg-white rounded-lg shadow-sm">
                         <div class="px-4 py-3 border-b border-gray-200">
@@ -34,7 +27,7 @@
                                 <button id="stop" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50" disabled>Stop</button>
                             </div>
                             <div id="state-status" class="text-sm text-gray-600 mb-2"></div>
-                            <div id="state-transcribed" class="text-sm text-gray-800 h-[calc(100%-120px)] overflow-y-auto"></div>
+                            <div id="state-transcribed" class="text-sm text-gray-800"></div>
                         </div>
                     </div>
                     
@@ -335,17 +328,7 @@
                     var transcribed = Module.get_transcribed();
 
                     if (transcribed != null && transcribed.length > 1) {
-                        transcribedAll += transcribed + '<br>';
-                        nLines++;
-
-                        // if more than 10 lines, remove the first line
-                        if (nLines > 10) {
-                            var i = transcribedAll.indexOf('<br>');
-                            if (i > 0) {
-                                transcribedAll = transcribedAll.substring(i + 4);
-                                nLines--;
-                            }
-                        }
+                        transcribedAll = `<div class="flex justify-start"><div class="bg-gray-100 rounded-xl rounded-tl-none px-2 max-w-[200px] inline-block"><div class="text-xs leading-none text-gray-700 text-left">Estoy escuchando 👂 👀</div></div></div>`;
                     }
 
                     document.getElementById('state-status').innerHTML = Module.get_status();
