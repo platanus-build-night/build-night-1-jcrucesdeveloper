@@ -1,364 +1,387 @@
 <!doctype html>
 <html lang="en-us">
-    <head>
-        <title>Whisper Transcription</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        <script src="../coi-serviceworker.js"></script>
-        <link rel="icon" href="data:,">
-    </head>
-    <body class="bg-gray-50">
-        <div class="flex h-screen">
-            <!-- Sidebar Container -->
-            <div id="sidebar-container" class="w-1/4 min-w-[300px] h-full"></div>
 
-            <!-- Main Content -->
-            <div class="flex-2 grow-2 p-6">
-                <div class="grid grid-cols-2 gap-6">
-                    <!-- Whisper Listener -->
-                    <div id="chat-area-container" class="bg-white rounded-lg shadow-sm">
-                        <div class="px-4 py-3 border-b border-gray-200">
-                            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper Listener</h3>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex gap-2 mb-4">
-                                <button id="start" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50" disabled>Start</button>
-                                <button id="stop" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50" disabled>Stop</button>
-                            </div>
-                            <div id="state-status" class="text-sm text-gray-600 mb-2"></div>
-                            <div id="state-transcribed" class="text-sm text-gray-800"></div>
-                        </div>
+<head>
+    <title>Whisper Transcription</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../coi-serviceworker.js"></script>
+    <link rel="icon" href="data:,">
+</head>
+
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar Container -->
+        <div id="sidebar-container" class="w-1/4 min-w-[300px] h-full"></div>
+
+        <!-- Main Content -->
+        <div class="flex-2 grow-2 p-6">
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Whisper Listener -->
+                <div id="chat-area-container" class="bg-white rounded-lg shadow-sm">
+                    <div class="px-4 py-3 border-b border-gray-200">
+                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper Listener</h3>
                     </div>
-                    
-                    <!-- Final Output -->
-                    <div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
-                        <div class="px-4 py-3 border-b border-gray-200">
-                            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
+                    <div class="p-4">
+                        <div class="flex gap-2 mb-4">
+                            <button id="start"
+                                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                                disabled>Start</button>
+                            <button id="stop"
+                                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+                                disabled>Stop</button>
                         </div>
-                        <div class="h-[calc(100%-3.5rem)] overflow-y-auto">
-                            <!-- Final output content will go here -->
-                        </div>
+                        <div id="state-status" class="text-sm text-gray-600 mb-2"></div>
+                        <div id="state-transcribed" class="text-sm text-gray-800"></div>
                     </div>
-                  
                 </div>
+
+                <!-- Final Output -->
+                <div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-200">
+                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
+                    </div>
+                    <div class="h-[calc(100%-3.5rem)] overflow-y-auto">
+                        <!-- Final output content will go here -->
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>
 
-        <!-- Scripts -->
-        <script type="text/javascript" src="helpers.js"></script>
-        <script type="text/javascript" src="components/loader.js"></script>
-        <script type='text/javascript'>
-            // web audio context
-            var context = null;
+    <!-- Scripts -->
+    <script type="text/javascript" src="helpers.js"></script>
+    <script type="text/javascript" src="components/loader.js"></script>
+    <script type='text/javascript'>
+        // web audio context
+        var context = null;
 
-            // audio data
-            var audio = null;
-            var audio0 = null;
+        // audio data
+        var audio = null;
+        var audio0 = null;
 
-            // the stream instance
-            var instance = null;
+        // the stream instance
+        var instance = null;
 
-            // model name
-            var model_whisper = null;
+        // model name
+        var model_whisper = null;
 
-            var Module = {
-                print: printTextarea,
-                printErr: printTextarea,
-                setStatus: function(text) {
-                    printTextarea('js: ' + text);
-                },
-                monitorRunDependencies: function(left) {
-                },
-                preRun: function() {
-                    printTextarea('js: Preparing ...');
-                },
-                postRun: function() {
-                    printTextarea('js: Initialized successfully!');
-                }
+        var Module = {
+            print: printTextarea,
+            printErr: printTextarea,
+            setStatus: function (text) {
+                printTextarea('js: ' + text);
+            },
+            monitorRunDependencies: function (left) {
+            },
+            preRun: function () {
+                printTextarea('js: Preparing ...');
+            },
+            postRun: function () {
+                printTextarea('js: Initialized successfully!');
+            }
+        };
+
+        //
+        // fetch models
+        //
+
+        let dbVersion = 1
+        let dbName = 'whisper.ggerganov.com';
+        let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
+
+        function storeFS(fname, buf) {
+            // write to WASM file using FS_createDataFile
+            // if the file exists, delete it
+            try {
+                Module.FS_unlink(fname);
+            } catch (e) {
+                // ignore
+            }
+
+            Module.FS_createDataFile("/", fname, buf, true, true);
+
+            printTextarea('storeFS: stored model: ' + fname + ' size: ' + buf.length);
+
+            document.getElementById('model-whisper-status').innerHTML = 'loaded "' + model_whisper + '"!';
+
+            if (model_whisper != null) {
+                document.getElementById('start').disabled = false;
+                document.getElementById('stop').disabled = true;
+            }
+        }
+
+        function loadWhisper(model) {
+            let urls = {
+                'tiny.en': 'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en.bin',
+                'base.en': 'https://whisper.ggerganov.com/ggml-model-whisper-base.en.bin',
+
+                'tiny-en-q5_1': 'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en-q5_1.bin',
+                'base-en-q5_1': 'https://whisper.ggerganov.com/ggml-model-whisper-base.en-q5_1.bin',
             };
 
-            //
-            // fetch models
-            //
+            let sizes = {
+                'tiny.en': 75,
+                'base.en': 142,
 
-            let dbVersion = 1
-            let dbName    = 'whisper.ggerganov.com';
-            let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
+                'tiny-en-q5_1': 31,
+                'base-en-q5_1': 57,
+            };
 
-            function storeFS(fname, buf) {
-                // write to WASM file using FS_createDataFile
-                // if the file exists, delete it
-                try {
-                    Module.FS_unlink(fname);
-                } catch (e) {
-                    // ignore
-                }
+            let url = urls[model];
+            let dst = 'whisper.bin';
+            let size_mb = sizes[model];
 
-                Module.FS_createDataFile("/", fname, buf, true, true);
+            model_whisper = model;
 
-                printTextarea('storeFS: stored model: ' + fname + ' size: ' + buf.length);
+            // Hide model selection buttons and sections
+            document.getElementById('fetch-whisper-tiny-en').style.visibility = 'hidden';
+            document.getElementById('fetch-whisper-base-en').style.visibility = 'hidden';
+            document.getElementById('fetch-whisper-tiny-en-q5_1').style.visibility = 'hidden';
+            document.getElementById('fetch-whisper-base-en-q5_1').style.visibility = 'hidden';
+            document.getElementById('standard-models-section').style.display = 'none';
+            document.getElementById('quantized-models-section').style.display = 'none';
 
-                document.getElementById('model-whisper-status').innerHTML = 'loaded "' + model_whisper + '"!';
+            // Show selected model
+            let selectedModelDisplay = document.getElementById('selected-model-display');
+            selectedModelDisplay.innerHTML = 'Modelo Seleccionado: ' + model;
+            selectedModelDisplay.style.display = 'block';
 
-                if (model_whisper != null) {
-                    document.getElementById('start').disabled = false;
-                    document.getElementById('stop' ).disabled = true;
-                }
+            document.getElementById('model-whisper-status').innerHTML = 'loading "' + model + '" ... ';
+
+            cbProgress = function (p) {
+                let el = document.getElementById('fetch-whisper-progress');
+                el.innerHTML = Math.round(100 * p) + '%';
+            };
+
+            cbCancel = function () {
+                var el;
+                // Show model selection buttons
+                el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.visibility = 'visible';
+                el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.visibility = 'visible';
+                el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.visibility = 'visible';
+                el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.visibility = 'visible';
+
+                // Show model sections
+                el = document.getElementById('standard-models-section'); if (el) el.style.display = 'block';
+                el = document.getElementById('quantized-models-section'); if (el) el.style.display = 'block';
+
+                // Hide selected model display
+                el = document.getElementById('selected-model-display'); if (el) el.style.display = 'none';
+
+                el = document.getElementById('model-whisper-status'); if (el) el.innerHTML = '';
+            };
+
+            loadRemote(url, dst, size_mb, cbProgress, storeFS, cbCancel, printTextarea);
+        }
+
+        //
+        // microphone
+        //
+
+        const kSampleRate = 16000;
+        const kRestartRecording_s = 120;
+        const kIntervalAudio_ms = 5000; // pass the recorded audio to the C++ instance at this rate
+
+        var mediaRecorder = null;
+        var doRecording = false;
+        var startTime = 0;
+
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        window.OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+
+        function stopRecording() {
+            Module.set_status("paused");
+            doRecording = false;
+            audio0 = null;
+            audio = null;
+            context = null;
+        }
+
+        function startRecording() {
+            if (!context) {
+                context = new AudioContext({
+                    sampleRate: kSampleRate,
+                    channelCount: 1,
+                    echoCancellation: false,
+                    autoGainControl: true,
+                    noiseSuppression: true,
+                });
             }
 
-            function loadWhisper(model) {
-                let urls = {
-                    'tiny.en': 'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en.bin',
-                    'base.en': 'https://whisper.ggerganov.com/ggml-model-whisper-base.en.bin',
+            Module.set_status("");
 
-                    'tiny-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-tiny.en-q5_1.bin',
-                    'base-en-q5_1':  'https://whisper.ggerganov.com/ggml-model-whisper-base.en-q5_1.bin',
-                };
+            document.getElementById('start').disabled = true;
+            document.getElementById('stop').disabled = false;
 
-                let sizes = {
-                    'tiny.en': 75,
-                    'base.en': 142,
+            doRecording = true;
+            startTime = Date.now();
 
-                    'tiny-en-q5_1':   31,
-                    'base-en-q5_1':   57,
-                };
+            var chunks = [];
+            var stream = null;
 
-                let url     = urls[model];
-                let dst     = 'whisper.bin';
-                let size_mb = sizes[model];
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+                .then(function (s) {
+                    stream = s;
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = function (e) {
+                        chunks.push(e.data);
 
-                model_whisper = model;
+                        var blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        var reader = new FileReader();
 
-                // Hide model selection buttons and sections
-                document.getElementById('fetch-whisper-tiny-en').style.visibility = 'hidden';
-                document.getElementById('fetch-whisper-base-en').style.visibility = 'hidden';
-                document.getElementById('fetch-whisper-tiny-en-q5_1').style.visibility = 'hidden';
-                document.getElementById('fetch-whisper-base-en-q5_1').style.visibility = 'hidden';
-                document.getElementById('standard-models-section').style.display = 'none';
-                document.getElementById('quantized-models-section').style.display = 'none';
+                        reader.onload = function (event) {
+                            var buf = new Uint8Array(reader.result);
 
-                // Show selected model
-                let selectedModelDisplay = document.getElementById('selected-model-display');
-                selectedModelDisplay.innerHTML = 'Modelo Seleccionado: ' + model;
-                selectedModelDisplay.style.display = 'block';
-
-                document.getElementById('model-whisper-status').innerHTML = 'loading "' + model + '" ... ';
-
-                cbProgress = function(p) {
-                    let el = document.getElementById('fetch-whisper-progress');
-                    el.innerHTML = Math.round(100*p) + '%';
-                };
-
-                cbCancel = function() {
-                    var el;
-                    // Show model selection buttons
-                    el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.visibility = 'visible';
-                    el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.visibility = 'visible';
-                    el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.visibility = 'visible';
-                    el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.visibility = 'visible';
-
-                    // Show model sections
-                    el = document.getElementById('standard-models-section'); if (el) el.style.display = 'block';
-                    el = document.getElementById('quantized-models-section'); if (el) el.style.display = 'block';
-
-                    // Hide selected model display
-                    el = document.getElementById('selected-model-display'); if (el) el.style.display = 'none';
-
-                    el = document.getElementById('model-whisper-status');  if (el) el.innerHTML = '';
-                };
-
-                loadRemote(url, dst, size_mb, cbProgress, storeFS, cbCancel, printTextarea);
-            }
-
-            //
-            // microphone
-            //
-
-            const kSampleRate = 16000;
-            const kRestartRecording_s = 120;
-            const kIntervalAudio_ms = 5000; // pass the recorded audio to the C++ instance at this rate
-
-            var mediaRecorder = null;
-            var doRecording = false;
-            var startTime = 0;
-
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            window.OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-
-            function stopRecording() {
-                Module.set_status("paused");
-                doRecording = false;
-                audio0 = null;
-                audio = null;
-                context = null;
-            }
-
-            function startRecording() {
-                if (!context) {
-                    context = new AudioContext({
-                        sampleRate: kSampleRate,
-                        channelCount: 1,
-                        echoCancellation: false,
-                        autoGainControl:  true,
-                        noiseSuppression: true,
-                    });
-                }
-
-                Module.set_status("");
-
-                document.getElementById('start').disabled = true;
-                document.getElementById('stop').disabled = false;
-
-                doRecording = true;
-                startTime = Date.now();
-
-                var chunks = [];
-                var stream = null;
-
-                navigator.mediaDevices.getUserMedia({audio: true, video: false})
-                    .then(function(s) {
-                        stream = s;
-                        mediaRecorder = new MediaRecorder(stream);
-                        mediaRecorder.ondataavailable = function(e) {
-                            chunks.push(e.data);
-
-                            var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-                            var reader = new FileReader();
-
-                            reader.onload = function(event) {
-                                var buf = new Uint8Array(reader.result);
-
-                                if (!context) {
-                                    return;
-                                }
-                                context.decodeAudioData(buf.buffer, function(audioBuffer) {
-                                    var offlineContext = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
-                                    var source = offlineContext.createBufferSource();
-                                    source.buffer = audioBuffer;
-                                    source.connect(offlineContext.destination);
-                                    source.start(0);
-
-                                    offlineContext.startRendering().then(function(renderedBuffer) {
-                                        audio = renderedBuffer.getChannelData(0);
-
-                                        //printTextarea('js: audio recorded, size: ' + audio.length + ', old size: ' + (audio0 == null ? 0 : audio0.length));
-
-                                        var audioAll = new Float32Array(audio0 == null ? audio.length : audio0.length + audio.length);
-                                        if (audio0 != null) {
-                                            audioAll.set(audio0, 0);
-                                        }
-                                        audioAll.set(audio, audio0 == null ? 0 : audio0.length);
-
-                                        if (instance) {
-                                            Module.set_audio(instance, audioAll);
-                                        }
-                                    });
-                                }, function(e) {
-                                    audio = null;
-                                });
+                            if (!context) {
+                                return;
                             }
+                            context.decodeAudioData(buf.buffer, function (audioBuffer) {
+                                var offlineContext = new OfflineAudioContext(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate);
+                                var source = offlineContext.createBufferSource();
+                                source.buffer = audioBuffer;
+                                source.connect(offlineContext.destination);
+                                source.start(0);
 
-                            reader.readAsArrayBuffer(blob);
-                        };
+                                offlineContext.startRendering().then(function (renderedBuffer) {
+                                    audio = renderedBuffer.getChannelData(0);
 
-                        mediaRecorder.onstop = function(e) {
-                            if (doRecording) {
-                                setTimeout(function() {
-                                    startRecording();
+                                    //printTextarea('js: audio recorded, size: ' + audio.length + ', old size: ' + (audio0 == null ? 0 : audio0.length));
+
+                                    var audioAll = new Float32Array(audio0 == null ? audio.length : audio0.length + audio.length);
+                                    if (audio0 != null) {
+                                        audioAll.set(audio0, 0);
+                                    }
+                                    audioAll.set(audio, audio0 == null ? 0 : audio0.length);
+
+                                    if (instance) {
+                                        Module.set_audio(instance, audioAll);
+                                    }
                                 });
-                            }
-                        };
-
-                        mediaRecorder.start(kIntervalAudio_ms);
-                    })
-                    .catch(function(err) {
-                        printTextarea('js: error getting audio stream: ' + err);
-                    });
-
-                var interval = setInterval(function() {
-                    if (!doRecording) {
-                        clearInterval(interval);
-                        mediaRecorder.stop();
-                        stream.getTracks().forEach(function(track) {
-                            track.stop();
-                        });
-
-                        document.getElementById('start').disabled = false;
-                        document.getElementById('stop').disabled  = true;
-
-                        mediaRecorder = null;
-                    }
-
-                    // if audio length is more than kRestartRecording_s seconds, restart recording
-                    if (audio != null && audio.length > kSampleRate*kRestartRecording_s) {
-                        if (doRecording) {
-                            //printTextarea('js: restarting recording');
-
-                            clearInterval(interval);
-                            audio0 = audio;
-                            audio = null;
-                            mediaRecorder.stop();
-                            stream.getTracks().forEach(function(track) {
-                                track.stop();
+                            }, function (e) {
+                                audio = null;
                             });
                         }
-                    }
-                }, 100);
-            }
 
-            //
-            // main
-            //
+                        reader.readAsArrayBuffer(blob);
+                    };
 
-            var nLines = 0;
-            var intervalUpdate = null;
-            var transcribedAll = '';
+                    mediaRecorder.onstop = function (e) {
+                        if (doRecording) {
+                            setTimeout(function () {
+                                startRecording();
+                            });
+                        }
+                    };
 
-            function onStart() {
-                if (!instance) {
-                    instance = Module.init('whisper.bin');
+                    mediaRecorder.start(kIntervalAudio_ms);
+                })
+                .catch(function (err) {
+                    printTextarea('js: error getting audio stream: ' + err);
+                });
 
-                    if (instance) {
-                        printTextarea("js: whisper initialized, instance: " + instance);
-                    }
+            var interval = setInterval(function () {
+                if (!doRecording) {
+                    clearInterval(interval);
+                    mediaRecorder.stop();
+                    stream.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
+
+                    document.getElementById('start').disabled = false;
+                    document.getElementById('stop').disabled = true;
+
+                    mediaRecorder = null;
                 }
 
-                if (!instance) {
-                    printTextarea("js: failed to initialize whisper");
-                    return;
-                }
+                // if audio length is more than kRestartRecording_s seconds, restart recording
+                if (audio != null && audio.length > kSampleRate * kRestartRecording_s) {
+                    if (doRecording) {
+                        //printTextarea('js: restarting recording');
 
-                startRecording();
-
-                intervalUpdate = setInterval(function() {
-
-
-                    var transcribed = Module.get_transcribed();
-
-                    if (transcribed != null && transcribed.length > 1) {
-                        var newMessage = document.createElement('div');
-                        newMessage.className = 'flex';
-                        newMessage.innerHTML = `<div class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left">${transcribed}</div>`;
-                        document.getElementById('whisper-chat').appendChild(newMessage);
+                        clearInterval(interval);
+                        audio0 = audio;
+                        audio = null;
+                        mediaRecorder.stop();
+                        stream.getTracks().forEach(function (track) {
+                            track.stop();
+                        });
                     }
+                }
+            }, 100);
+        }
 
-                    document.getElementById('state-status').innerHTML = Module.get_status();
-                }, 100);
+        //
+        // main
+        //
+
+        var nLines = 0;
+        var intervalUpdate = null;
+        var transcribedAll = '';
+
+        function onStart() {
+            if (!instance) {
+                instance = Module.init('whisper.bin');
+
+                if (instance) {
+                    printTextarea("js: whisper initialized, instance: " + instance);
+                }
             }
 
-            function addDivLoading() {
+            if (!instance) {
+                printTextarea("js: failed to initialize whisper");
+                return;
+            }
+
+            startRecording();
+
+            intervalUpdate = setInterval(function () {
+
+
+                var transcribed = Module.get_transcribed();
+
+                if (transcribed != null && transcribed.length > 1) {
                     var newMessage = document.createElement('div');
                     newMessage.className = 'flex';
-                    newMessage.innerHTML = `<div class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left">${transcribed}</div>`;
+                    var messageContent = document.createElement('div');
+                    messageContent.className = 'bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left';
+                    newMessage.appendChild(messageContent);
                     document.getElementById('whisper-chat').appendChild(newMessage);
-            }
+                    // Aplicar el efecto de typewriting al texto
+                    typeWriter(transcribed, messageContent);
+                }
 
-            function onStop() {
-                stopRecording();
+                document.getElementById('state-status').innerHTML = Module.get_status();
+            }, 100);
+        }
+        function typeWriter(text, element, speed = 50) {
+            let i = 0;
+            element.innerHTML = ''; // Limpiar el contenido inicial
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed); // Controla la velocidad de escritura
+                }
             }
+            type();
+        }
 
-        </script>
-        <script type="text/javascript" src="stream.js"></script>
-    </body>
+        function addDivLoading() {
+            var newMessage = document.createElement('div');
+            newMessage.className = 'flex';
+            newMessage.innerHTML = `<div class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left">${transcribed}</div>`;
+            document.getElementById('whisper-chat').appendChild(newMessage);
+        }
+
+        function onStop() {
+            stopRecording();
+        }
+
+    </script>
+    <script type="text/javascript" src="stream.js"></script>
+</body>
+
 </html>
