@@ -1,118 +1,55 @@
 <!doctype html>
 <html lang="en-us">
     <head>
-        <title>stream : Real-time Whisper transcription in WebAssembly</title>
-
-        <style>
-            #output {
-                width: 100%;
-                height: 100%;
-                margin: 0 auto;
-                margin-top: 10px;
-                border-left: 0px;
-                border-right: 0px;
-                padding-left: 0px;
-                padding-right: 0px;
-                display: block;
-                background-color: black;
-                color: white;
-                font-size: 10px;
-                font-family: 'Lucida Console', Monaco, monospace;
-                outline: none;
-                white-space: pre;
-                overflow-wrap: normal;
-                overflow-x: scroll;
-            }
-        </style>
+        <title>Whisper Transcription</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <script src="../coi-serviceworker.js"></script>
         <link rel="icon" href="data:,">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+        </style>
     </head>
-    <body>
-        <div id="main-container">
-            <b>stream : Real-time Whisper transcription in WebAssembly</b>
+    <body class="bg-gray-50">
+        <div class="flex h-screen">
+            <!-- Sidebar Container -->
+            <div id="sidebar-container" class="w-1/3 min-w-[300px] h-full"></div>
 
-            <br><br>
+            <!-- Main Content -->
+            <div class="flex-2 grow-2 p-6">
+                <div class="grid grid-rows-[1fr_200px] grid-cols-2 gap-6 h-full">
+                    <!-- Whisper Listener -->
+                    <div id="chat-area-container" class="bg-white rounded-lg shadow-sm"></div>
+                    
+                    <!-- Final Output -->
+                    <div class="bg-white rounded-lg shadow-sm">
+                        <div class="px-4 py-3 border-b border-gray-200">
+                            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
+                        </div>
+                        <div class="p-4 h-[calc(100%-3.5rem)] overflow-y-auto">
+                            <!-- Final output content will go here -->
+                        </div>
+                    </div>
 
-            You can find more about this project on <a href="https://github.com/ggerganov/whisper.cpp/tree/master/examples/stream.wasm">GitHub</a>.
-
-            <br><br>
-
-            <b>More examples:</b>
-                <a href="../">main</a> |
-                <a href="../bench.wasm/">bench</a> |
-                <a href="../stream.wasm">stream</a> |
-                <a href="../command.wasm/">command</a> |
-
-            <br><br>
-
-            <hr>
-
-            Select the model you would like to use, click the "Start" button and start speaking
-
-            <br><br>
-
-            <div id="model-whisper">
-                Whisper model: <span id="model-whisper-status"></span>
-                <button id="fetch-whisper-tiny-en" onclick="loadWhisper('tiny.en')">tiny.en (75 MB)</button>
-                <button id="fetch-whisper-base-en" onclick="loadWhisper('base.en')">base.en (142 MB)</button>
-                <br><br>
-                Quantized models:<br><br>
-                <button id="fetch-whisper-tiny-en-q5_1"   onclick="loadWhisper('tiny-en-q5_1')">tiny.en (Q5_1, 31 MB)</button>
-                <button id="fetch-whisper-base-en-q5_1"   onclick="loadWhisper('base-en-q5_1')">base.en (Q5_1, 57 MB)</button>
-                <span id="fetch-whisper-progress"></span>
-
-                <!--
-                    <input type="file" id="file" name="file" onchange="loadFile(event, 'whisper.bin')" />
-                -->
-            </div>
-
-            <br>
-
-            <div id="input">
-                <button id="start"  onclick="onStart()" disabled>Start</button>
-                <button id="stop"   onclick="onStop()" disabled>Stop</button>
-                <button id="clear"  onclick="clearCache()">Clear Cache</button>
-            </div>
-
-            <br>
-
-            <div id="state">
-                Status: <b><span id="state-status">not started</span></b>
-
-                <pre id="state-transcribed">[The transcribed text will be displayed here]</pre>
-            </div>
-
-            <hr>
-
-            Debug output:
-            <textarea id="output" rows="20"></textarea>
-
-            <br>
-
-            <b>Troubleshooting</b>
-
-            <br><br>
-
-            The page does some heavy computations, so make sure:
-
-            <ul>
-                <li>To use a modern web browser (e.g. Chrome, Firefox)</li>
-                <li>To use a fast desktop or laptop computer (i.e. not a mobile phone)</li>
-                <li>Your browser supports WASM <a href="https://webassembly.org/roadmap/">Fixed-width SIMD</a></li>
-            </ul>
-
-            <div class="cell-version">
-                <span>
-                    |
-                    Build time: <span class="nav-link">Fri Apr 25 15:33:11 2025</span> |
-                    Commit hash: <a class="nav-link" href="https://github.com/ggerganov/whisper.cpp/commit/50fda73f">50fda73f</a> |
-                    Commit subject: <span class="nav-link">ruby : add encoder begin callback related methods (#3076)</span> |
-                    <a class="nav-link" href="https://github.com/ggerganov/whisper.cpp/tree/master/examples/stream.wasm">Source Code</a> |
-                </span>
+                    <!-- Debug Output -->
+                    <div class="col-span-2 bg-gray-50 rounded-lg">
+                        <div class="px-4 py-2 border-b border-gray-200 bg-white rounded-t-lg">
+                            <h3 class="text-xs font-medium text-gray-500 uppercase tracking-wider">Debug Output</h3>
+                        </div>
+                        <textarea id="output" class="w-full h-[calc(100%-2.5rem)] p-3 font-mono text-xs text-gray-700 bg-transparent focus:outline-none resize-none overflow-y-auto" readonly></textarea>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- Scripts -->
         <script type="text/javascript" src="helpers.js"></script>
+        <script type="text/javascript" src="components/loader.js"></script>
         <script type='text/javascript'>
             // web audio context
             var context = null;

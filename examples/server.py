@@ -101,7 +101,7 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
-PORT = 8000
+PORT = 3000
 
 # Enable address reuse
 class CustomServer(socketserver.TCPServer):

@@ -7,11 +7,20 @@ function convertTypedArray(src, type) {
 }
 
 var printTextarea = (function() {
-    var element = document.getElementById('output');
-    if (element) element.value = ''; // clear browser cache
+    var element = null;
+    
+    // Initialize the element when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        element = document.getElementById('output');
+        if (element) element.value = ''; // clear browser cache
+    });
+
     return function(text) {
         if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
         console.log(text);
+        if (!element) {
+            element = document.getElementById('output');
+        }
         if (element) {
             element.value += text + "\n";
             element.scrollTop = element.scrollHeight; // focus on bottom
