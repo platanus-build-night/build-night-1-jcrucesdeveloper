@@ -21,7 +21,7 @@
                 <!-- Whisper Listener -->
                 <div id="chat-area-container" class="bg-white rounded-lg shadow-sm">
                     <div class="px-4 py-3 border-b border-gray-200">
-                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper Listener</h3>
+                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper asjjListener</h3>
                     </div>
                     <div class="p-4">
                         <div class="flex gap-2 mb-4">
@@ -45,11 +45,11 @@
     </div>
 
     <!-- Scripts -->
+    <script type="text/javascript" src="whisper-brain.js"></script>
     <script type="text/javascript" src="helpers.js"></script>
     <script type="text/javascript" src="components/loader.js"></script>
     <script type='text/javascript'>
 
-            addFirstElementWhisperChat();
         // web audio context
         var context = null;
 
@@ -351,6 +351,9 @@
                     document.getElementById('whisper-chat').appendChild(newMessage);
                     // Aplicar el efecto de typewriting al texto
                     typeWriter(transcribed, messageContent);
+                    // Agregar al whisper brain y guardar
+                    whisperBrainAddMessage(transcribed);
+                    scrollToBottom();
                 }
 
                 document.getElementById('state-status').innerHTML = Module.get_status();
@@ -376,6 +379,14 @@
             type();
         }
 
+    // Function to scroll to the bottom of the chat
+    function scrollToBottom() {
+        const chatContainer = document.getElementById('whisper-chat');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+
+
         function addDivLoading() {
             var newMessage = document.createElement('div');
             newMessage.className = 'flex';
@@ -385,6 +396,10 @@
 
         function onStop() {
             stopRecording();
+        }
+
+        if (typeof startFinalOutputSync === 'function') {
+            startFinalOutputSync();
         }
 
     </script>

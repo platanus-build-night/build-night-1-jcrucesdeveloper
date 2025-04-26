@@ -6,4 +6,22 @@
     <div class="h-[calc(100%-3.5rem)] overflow-y-auto" id="final-output-content">
         <!-- Final output content will go here -->
     </div>
-</div> 
+</div>
+<script>
+(function() {
+    let lastOutput = '';
+    function syncFinalOutput() {
+        if (window.whisperBrain) {
+            const current = window.whisperBrain.getAllMessages();
+            if (current !== lastOutput) {
+                const outputDiv = document.getElementById('final-output-content');
+                if (outputDiv) {
+                    outputDiv.textContent = current;
+                }
+                lastOutput = current;
+            }
+        }
+    }
+    setInterval(syncFinalOutput, 50);
+})();
+</script> 
