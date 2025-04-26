@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="../coi-serviceworker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="icon" href="data:,">
 </head>
 
@@ -50,6 +51,7 @@
     <script type="text/javascript" src="whisper-brain.js"></script>
     <script type="text/javascript" src="helpers.js"></script>
     <script type="text/javascript" src="components/formatter.js"></script>
+    <script type="text/javascript" src="components/pdf-formatter.js"></script>
     <script type="text/javascript" src="components/loader.js"></script>
     <script type='text/javascript'>
 
@@ -410,6 +412,24 @@
             const finalOutput = document.getElementById('final-output-content');
             const element = TestFormatter.format(transcribed);
             finalOutput.appendChild(element);
+            
+            // Add to PDF
+            const { jsPDF } = window.jspdf;
+            if (!window.pdfDoc) {
+                window.pdfDoc = new jsPDF();
+                window.pdfY = 10; // Initial Y position
+            }
+            
+            // Add the transcribed text to PDF using PDFFormatter
+            window.pdfY = PDFFormatter.format(transcribed, window.pdfDoc, window.pdfY);
+            scrollToBottom();
+        }
+
+
+
+        function generatePDF() 
+        {
+            window.pdfDoc.save('whisper.pdf');
         }
 
 

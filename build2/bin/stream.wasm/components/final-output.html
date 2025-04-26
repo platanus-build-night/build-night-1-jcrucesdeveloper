@@ -2,8 +2,10 @@
 <div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
     <div class="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
         <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
-        <button id="test-whisper"  onclick="testWhisper()" class="px-3 py-1 bg-blue-500 text-white rounded text-sm">
-            Test Whisper
+        <button id="download-pdf-btn"  onclick="generatePDF()"
+                class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 flex items-center gap-2 shadow-sm hover:shadow">
+            <span>📄</span>
+            <span>Descargar PDF</span>
         </button>
     </div>
     <div class="h-[calc(100%-3.5rem)] overflow-y-auto p-3" id="final-output-content">
