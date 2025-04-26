@@ -2,31 +2,45 @@ class TestFormatter {
     static format(text) {
         const lowerText = text.toLowerCase();
         
+        // Helper function to clean text from keywords
+        const cleanText = (text) => {
+            return text
+                .replace(/\b(1|one)\b/gi, '')
+                .replace(/\b(2|two)\b/gi, '')
+                .replace(/\b(3|three)\b/gi, '')
+                .replace(/\b(bold|strong)\b/gi, '')
+                .replace(/\b(list|bullet)\b/gi, '')
+                .replace(/\b(link|url)\b/gi, '')
+                .replace(/\b(quote|block)\b/gi, '')
+                .replace(/\b(code|pre)\b/gi, '')
+                .trim();
+        };
+        
         // Check for headings
         if (lowerText.includes('1') || lowerText.includes('one')) {
             const h1 = document.createElement('h1');
-            h1.textContent = text;
-            h1.className = 'text-4xl font-bold text-gray-900 mb-4 mt-6 tracking-tight';
+            h1.textContent = cleanText(text);
+            h1.className = 'text-2xl font-bold text-gray-800 mb-3 mt-4 tracking-tight';
             return h1;
         }
         if (lowerText.includes('2') || lowerText.includes('two')) {
             const h2 = document.createElement('h2');
-            h2.textContent = text;
-            h2.className = 'text-3xl font-semibold text-gray-800 mb-3 mt-5';
+            h2.textContent = cleanText(text);
+            h2.className = 'text-xl font-semibold text-gray-700 mb-2 mt-3';
             return h2;
         }
         if (lowerText.includes('3') || lowerText.includes('three')) {
             const h3 = document.createElement('h3');
-            h3.textContent = text;
-            h3.className = 'text-2xl font-medium text-gray-700 mb-2 mt-4';
+            h3.textContent = cleanText(text);
+            h3.className = 'text-lg font-medium text-gray-600 mb-2 mt-2';
             return h3;
         }
         
         // Check for other HTML elements
         if (lowerText.includes('bold') || lowerText.includes('strong')) {
             const strong = document.createElement('strong');
-            strong.textContent = text;
-            strong.className = 'font-bold text-gray-900';
+            strong.textContent = cleanText(text);
+            strong.className = 'font-bold text-gray-800';
             return strong;
         }
         // if (lowerText.includes('italic') || lowerText.includes('em')) {
@@ -37,36 +51,36 @@ class TestFormatter {
         if (lowerText.includes('list') || lowerText.includes('bullet')) {
             const ul = document.createElement('ul');
             const li = document.createElement('li');
-            li.textContent = text;
-            li.className = 'list-disc ml-6 text-gray-700 mb-2';
+            li.textContent = cleanText(text);
+            li.className = 'list-disc ml-5 text-gray-600 mb-1 text-sm';
             ul.appendChild(li);
-            ul.className = 'mb-4';
+            ul.className = 'mb-3';
             return ul;
         }
         if (lowerText.includes('link') || lowerText.includes('url')) {
             const a = document.createElement('a');
             a.href = '#';
-            a.textContent = text;
-            a.className = 'text-blue-600 hover:text-blue-800 underline transition-colors duration-200';
+            a.textContent = cleanText(text);
+            a.className = 'text-blue-500 hover:text-blue-700 underline transition-colors duration-200 text-sm';
             return a;
         }
         if (lowerText.includes('quote') || lowerText.includes('block')) {
             const blockquote = document.createElement('blockquote');
-            blockquote.textContent = text;
-            blockquote.className = 'border-l-4 border-gray-300 pl-4 italic text-gray-600 my-4';
+            blockquote.textContent = cleanText(text);
+            blockquote.className = 'border-l-2 border-gray-200 pl-3 italic text-gray-600 my-3 text-sm';
             return blockquote;
         }
         if (lowerText.includes('code') || lowerText.includes('pre')) {
             const pre = document.createElement('pre');
-            pre.textContent = text;
-            pre.className = 'bg-gray-100 p-4 rounded-md font-mono text-sm text-gray-800 my-4 overflow-x-auto';
+            pre.textContent = cleanText(text);
+            pre.className = 'bg-gray-50 p-3 rounded-md font-mono text-xs text-gray-700 my-3 overflow-x-auto';
             return pre;
         }
         
         // Default to paragraph if no special formatting is found
         const p = document.createElement('p');
         p.textContent = text;
-        p.className = 'text-gray-700 mb-4 leading-relaxed';
+        p.className = 'text-gray-600 mb-3 leading-relaxed text-sm';
         return p;
     }
 }
