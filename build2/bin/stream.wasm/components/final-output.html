@@ -1,0 +1,15 @@
+<!-- final-output.html -->
+<div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
+    <div class="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
+        <button id="download-pdf-btn"  onclick="generatePDF()"
+                class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 flex items-center gap-2 shadow-sm hover:shadow">
+            <span>📄</span>
+            <span>Descargar PDF</span>
+        </button>
+    </div>
+    <div class="h-[calc(100%-3.5rem)] overflow-y-auto p-3" id="final-output-content">
+         
+    </div>
+</div>
+<script src="./formatter.js"></script>
