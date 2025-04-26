@@ -417,7 +417,7 @@
             const { jsPDF } = window.jspdf;
             if (!window.pdfDoc) {
                 window.pdfDoc = new jsPDF();
-                window.pdfY = 10; // Initial Y position
+                window.pdfY = PDFFormatter.initializePDF(window.pdfDoc);
             }
             
             // Add the transcribed text to PDF using PDFFormatter
@@ -427,9 +427,10 @@
 
 
 
-        function generatePDF() 
-        {
-            window.pdfDoc.save('whisper.pdf');
+        function generatePDF() {
+            if (window.pdfDoc) {
+                window.pdfDoc.save('transcripcion.pdf');
+            }
         }
 
 

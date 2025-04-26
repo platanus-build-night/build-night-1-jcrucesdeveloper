@@ -1,4 +1,21 @@
 class PDFFormatter {
+    static initializePDF(pdfDoc) {
+        // Add epic title with text-based microphone symbol
+        pdfDoc.setFontSize(24);
+        pdfDoc.setFont(undefined, 'bold');
+        pdfDoc.text('Whisper Transcription', 10, 20);
+        
+        // Add a separator line
+        pdfDoc.setDrawColor(200, 200, 200);
+        pdfDoc.line(10, 28, 200, 28);
+        
+        // Reset font for content
+        pdfDoc.setFontSize(12);
+        pdfDoc.setFont(undefined, 'normal');
+        
+        return 35; // Return initial Y position for content
+    }
+
     static format(text, pdfDoc, yPosition) {
         const lowerText = text.toLowerCase();
         
