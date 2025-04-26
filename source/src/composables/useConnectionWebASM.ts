@@ -1,13 +1,8 @@
 import { ref, Ref } from 'vue'
 
-interface WhisperInstance {
-  process_audio: (audioData: Float32Array) => Promise<string>
-}
-
 interface ConnectionWebASM {
   isInitialized: Ref<boolean>
   isProcessing: Ref<boolean>
-  whisperInstance: Ref<WhisperInstance | null>
   transcribedText: Ref<string>
   initWhisper: () => Promise<boolean>
   processAudioData: (audioData: Float32Array) => Promise<string | null>
@@ -17,19 +12,28 @@ interface ConnectionWebASM {
 export function useConnectionWebASM(): ConnectionWebASM {
   const isInitialized = ref<boolean>(false)
   const isProcessing = ref<boolean>(false)
-  const whisperInstance = ref<WhisperInstance | null>(null)
   const transcribedText = ref<string>('')
+  let audioWorker: Worker | null = null
 
   const initWhisper = async (): Promise<boolean> => {
     try {
-      // Cargar el módulo WebAssembly
-      const response = await fetch('/whisper.wasm')
-      const bytes = await response.arrayBuffer()
-      const module = await WebAssembly.instantiate(bytes)
+      // Inicializar el worker
+      audioWorker = new Worker(new URL('../workers/audioProcessor.js', import.meta.url), { type: 'module' })
       
-      // Inicializar la instancia de Whisper
-      whisperInstance.value = module.instance.exports as WhisperInstance
-      isInitialized.value = true
+      // Configurar el manejador de mensajes del worker
+      audioWorker.onmessage = (e) => {
+        const { status, text, error } = e.data
+        if (status === 'ready') {
+          isInitialized.value = true
+        } else if (status === 'success') {
+          transcribedText.value = text
+          isProcessing.value = false
+        } else if (status === 'error') {
+          console.error('Error en el worker:', error)
+          isProcessing.value = false
+        }
+      }
+
       return true
     } catch (error) {
       console.error('Error al inicializar Whisper:', error)
@@ -38,7 +42,7 @@ export function useConnectionWebASM(): ConnectionWebASM {
   }
 
   const processAudioData = async (audioData: Float32Array): Promise<string | null> => {
-    if (!isInitialized.value || !whisperInstance.value) {
+    if (!isInitialized.value || !audioWorker) {
       console.error('Whisper no está inicializado')
       return null
     }
@@ -46,18 +50,25 @@ export function useConnectionWebASM(): ConnectionWebASM {
     try {
       isProcessing.value = true
       
-      // Procesar el audio con Whisper
-      const result = await whisperInstance.value.process_audio(audioData)
+      // Enviar los datos de audio al worker
+      audioWorker.postMessage({ audioData })
       
-      // Actualizar el texto transcrito
-      transcribedText.value = result
-      
-      return result
+      // Esperar la respuesta del worker
+      return new Promise((resolve) => {
+        const handler = (e: MessageEvent) => {
+          const { status, text } = e.data
+          if (status === 'success') {
+            resolve(text)
+          } else {
+            resolve(null)
+          }
+          audioWorker?.removeEventListener('message', handler)
+        }
+        audioWorker?.addEventListener('message', handler)
+      })
     } catch (error) {
       console.error('Error al procesar audio:', error)
       return null
-    } finally {
-      isProcessing.value = false
     }
   }
 
@@ -68,7 +79,6 @@ export function useConnectionWebASM(): ConnectionWebASM {
   return {
     isInitialized,
     isProcessing,
-    whisperInstance,
     transcribedText,
     initWhisper,
     processAudioData,
