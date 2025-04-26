@@ -40,14 +40,7 @@
                             <!-- Final output content will go here -->
                         </div>
                     </div>
-
-                    <!-- Debug Output -->
-                    <div class="col-span-2 bg-gray-50 rounded-lg h-full overflow-hidden">
-                        <div class="px-4 py-2 border-b border-gray-200 bg-white rounded-t-lg">
-                            <h3 class="text-xs font-medium text-gray-500 uppercase tracking-wider">Debug Output</h3>
-                        </div>
-                        <textarea id="output" class="w-full h-[calc(100%-2.5rem)] p-3 font-mono text-xs text-gray-700 bg-transparent focus:outline-none resize-none overflow-y-auto" readonly></textarea>
-                    </div>
+                  
                 </div>
             </div>
         </div>
@@ -137,11 +130,18 @@
 
                 model_whisper = model;
 
-                document.getElementById('fetch-whisper-tiny-en').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en').style.display = 'none';
+                // Hide model selection buttons and sections
+                document.getElementById('fetch-whisper-tiny-en').style.visibility = 'hidden';
+                document.getElementById('fetch-whisper-base-en').style.visibility = 'hidden';
+                document.getElementById('fetch-whisper-tiny-en-q5_1').style.visibility = 'hidden';
+                document.getElementById('fetch-whisper-base-en-q5_1').style.visibility = 'hidden';
+                document.getElementById('standard-models-section').style.display = 'none';
+                document.getElementById('quantized-models-section').style.display = 'none';
 
-                document.getElementById('fetch-whisper-tiny-en-q5_1').style.display = 'none';
-                document.getElementById('fetch-whisper-base-en-q5_1').style.display = 'none';
+                // Show selected model
+                let selectedModelDisplay = document.getElementById('selected-model-display');
+                selectedModelDisplay.innerHTML = 'Modelo Seleccionado: ' + model;
+                selectedModelDisplay.style.display = 'block';
 
                 document.getElementById('model-whisper-status').innerHTML = 'loading "' + model + '" ... ';
 
@@ -152,11 +152,18 @@
 
                 cbCancel = function() {
                     var el;
-                    el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.display = 'inline-block';
+                    // Show model selection buttons
+                    el = document.getElementById('fetch-whisper-tiny-en'); if (el) el.style.visibility = 'visible';
+                    el = document.getElementById('fetch-whisper-base-en'); if (el) el.style.visibility = 'visible';
+                    el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.visibility = 'visible';
+                    el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.visibility = 'visible';
 
-                    el = document.getElementById('fetch-whisper-tiny-en-q5_1'); if (el) el.style.display = 'inline-block';
-                    el = document.getElementById('fetch-whisper-base-en-q5_1'); if (el) el.style.display = 'inline-block';
+                    // Show model sections
+                    el = document.getElementById('standard-models-section'); if (el) el.style.display = 'block';
+                    el = document.getElementById('quantized-models-section'); if (el) el.style.display = 'block';
+
+                    // Hide selected model display
+                    el = document.getElementById('selected-model-display'); if (el) el.style.display = 'none';
 
                     el = document.getElementById('model-whisper-status');  if (el) el.innerHTML = '';
                 };
@@ -325,6 +332,8 @@
                 startRecording();
 
                 intervalUpdate = setInterval(function() {
+
+
                     var transcribed = Module.get_transcribed();
 
                     if (transcribed != null && transcribed.length > 1) {
@@ -336,6 +345,13 @@
 
                     document.getElementById('state-status').innerHTML = Module.get_status();
                 }, 100);
+            }
+
+            function addDivLoading() {
+                    var newMessage = document.createElement('div');
+                    newMessage.className = 'flex';
+                    newMessage.innerHTML = `<div class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block text-left">${transcribed}</div>`;
+                    document.getElementById('whisper-chat').appendChild(newMessage);
             }
 
             function onStop() {

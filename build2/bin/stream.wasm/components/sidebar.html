@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold mb-6 text-gray-800">🎙️ Modelos</h2>
     
     <!-- Standard Models -->
-    <div class="mb-8">
+    <div id="standard-models-section" class="mb-8">
         <h3 class="text-lg font-semibold mb-4 text-gray-700">Modelos Estándar</h3>
         <div class="space-y-3">
             <button id="fetch-whisper-tiny-en" 
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Quantized Models -->
-    <div class="mb-8">
+    <div id="quantized-models-section" class="mb-8">
         <h3 class="text-lg font-semibold mb-4 text-gray-700">Modelos Cuantizados</h3>
         <div class="space-y-3">
             <button id="fetch-whisper-tiny-en-q5_1" 
@@ -37,6 +37,19 @@
         </div>
     </div>
 
+    <!-- Selected Model Display (Initially Hidden) -->
+    <h3 id="selected-model-display" class="text-lg font-semibold mb-4 text-gray-700" style="display: none;"></h3>
+
+    <div class="">
+          <!-- Debug Output -->
+          <div class="bg-gray-50 rounded-lg ">
+            <div class="px-4 py-2 border-b border-gray-200 bg-white rounded-t-lg">
+                <h3 class="text-xs font-medium text-gray-500 uppercase ">Debug Output</h3>
+            </div>
+            <textarea id="output" class="w-full h-64 p-3 font-mono text-xs text-gray-700 bg-transparent focus:outline-none resize-none overflow-y-auto border border-gray-200 rounded-b-lg" readonly></textarea>
+        </div>
+
+    </div>
     <!-- Status -->
     <div class="mt-6">
         <div id="model-whisper-status" class="text-sm text-gray-600 mb-2"></div>
