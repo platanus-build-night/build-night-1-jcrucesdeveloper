@@ -15,7 +15,7 @@ async function loadComponent(componentName) {
 
 async function loadComponents() {
     console.log('Loading components...');
-    const components = ['sidebar', 'chat-area', 'debug-output'];
+    const components = ['sidebar', 'chat-area', 'debug-output', 'final-output'];
     
     for (const component of components) {
         console.log(`Loading ${component}...`);

@@ -38,14 +38,7 @@
                 </div>
 
                 <!-- Final Output -->
-                <div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
-                    <div class="px-4 py-3 border-b border-gray-200">
-                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
-                    </div>
-                    <div class="h-[calc(100%-3.5rem)] overflow-y-auto">
-                        <!-- Final output content will go here -->
-                    </div>
-                </div>
+                <div id="final-output-container"></div>
 
             </div>
         </div>
@@ -55,6 +48,8 @@
     <script type="text/javascript" src="helpers.js"></script>
     <script type="text/javascript" src="components/loader.js"></script>
     <script type='text/javascript'>
+
+            addFirstElementWhisperChat();
         // web audio context
         var context = null;
 
@@ -200,6 +195,8 @@
             context = null;
         }
 
+  
+
         function startRecording() {
             if (!context) {
                 context = new AudioContext({
@@ -321,6 +318,8 @@
         var intervalUpdate = null;
         var transcribedAll = '';
 
+
+
         function onStart() {
             if (!instance) {
                 instance = Module.init('whisper.bin');
@@ -328,6 +327,7 @@
                 if (instance) {
                     printTextarea("js: whisper initialized, instance: " + instance);
                 }
+                
             }
 
             if (!instance) {
@@ -355,6 +355,13 @@
 
                 document.getElementById('state-status').innerHTML = Module.get_status();
             }, 100);
+        }
+
+        function addFirstElementWhisperChat() {
+            const element = document.createElement('div');
+
+
+
         }
         function typeWriter(text, element, speed = 50) {
             let i = 0;

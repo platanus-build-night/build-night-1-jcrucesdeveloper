@@ -7,10 +7,9 @@
 
         <div class="flex-1">
             <div class="whitespace-pre-wrap text-gray-800">
-                <div class="flex flex-col" id="whisper-chat" >
-                    <div 
-                    id="state-transcribed"
-                    class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block">Hola, te estoy escuchando 👀</div>
+                <div class="flex flex-col" id="whisper-chat">
+                    <div id="initial-chat"
+                        class="bg-gray-100 rounded-xl rounded-tl-none p-3 max-w-[300px] m-2 inline-block">Hola, presiona el microfono para escucharte👀</div>
                 </div>
             </div>
         </div>
@@ -18,38 +17,22 @@
         <div class="p-4 border-t-4 border-gray-300">
             <div class="flex flex-col items-center gap-4">
                 <div class="flex gap-3">
-                    <button id="start" 
-                            onclick="onStart()" 
-                            disabled
-                            class="p-4 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 bg-gray-800 hover:bg-gray-900 shadow-lg shadow-gray-800/50 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                             class="h-8 w-8 text-white" 
-                             fill="none" 
-                             viewBox="0 0 24 24" 
-                             stroke="currentColor">
-                            <path stroke-linecap="round" 
-                                  stroke-linejoin="round" 
-                                  stroke-width="2" 
-                                  d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    <button id="start" onclick="onStart()" disabled
+                        class="p-4 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 bg-gray-800 hover:bg-gray-900 shadow-lg shadow-gray-800/50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                         </svg>
                     </button>
-                    <button id="stop" 
-                            onclick="onStop()" 
-                            disabled
-                            class="p-4 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                             class="h-8 w-8 text-white" 
-                             fill="none" 
-                             viewBox="0 0 24 24" 
-                             stroke="currentColor">
-                            <path stroke-linecap="round" 
-                                  stroke-linejoin="round" 
-                                  stroke-width="2" 
-                                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            <path stroke-linecap="round" 
-                                  stroke-linejoin="round" 
-                                  stroke-width="2" 
-                                  d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                    <button id="stop" onclick="onStop()" disabled
+                        class="p-4 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
                         </svg>
                     </button>
                 </div>
@@ -57,4 +40,8 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+<script>
+  
+</script>
