@@ -1,27 +1,13 @@
 <!-- final-output.html -->
 <div class="bg-white rounded-lg shadow-sm h-full overflow-hidden">
-    <div class="px-4 py-3 border-b border-gray-200">
+    <div class="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
         <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Final Output</h3>
+        <button id="test-whisper"  onclick="testWhisper()" class="px-3 py-1 bg-blue-500 text-white rounded text-sm">
+            Test Whisper
+        </button>
     </div>
-    <div class="h-[calc(100%-3.5rem)] overflow-y-auto" id="final-output-content">
-        <!-- Final output content will go here -->
+    <div class="h-[calc(100%-3.5rem)] overflow-y-auto p-3" id="final-output-content">
+         
     </div>
 </div>
-<script>
-(function() {
-    let lastOutput = '';
-    function syncFinalOutput() {
-        if (window.whisperBrain) {
-            const current = window.whisperBrain.getAllMessages();
-            if (current !== lastOutput) {
-                const outputDiv = document.getElementById('final-output-content');
-                if (outputDiv) {
-                    outputDiv.textContent = current;
-                }
-                lastOutput = current;
-            }
-        }
-    }
-    setInterval(syncFinalOutput, 50);
-})();
-</script> 
+<script src="./formatter.js"></script>

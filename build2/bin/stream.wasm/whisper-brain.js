@@ -6,8 +6,8 @@ const whisperBrain = {
 
     // Agrega un mensaje al historial y guarda en localStorage
     addMessage(message) {
-        if (typeof message === 'string' && message.trim().length > 0) {
-            this.messages.push(message);
+        if (typeof message === 'string') {
+            this.messages.push(message ); 
             this.save();
         }
     },
@@ -23,13 +23,6 @@ const whisperBrain = {
         this.save();
     },
 
-    // Renderiza los mensajes en el Final Output
-    renderFinalOutput() {
-        const outputDiv = document.getElementById('final-output-content');
-        if (outputDiv) {
-            outputDiv.textContent = this.getAllMessages();
-        }
-    },
 
     // Agrega un mensaje y actualiza el output
     addAndRender(message) {
@@ -50,7 +43,6 @@ const whisperBrain = {
         } else {
             this.messages = [];
         }
-        this.renderFinalOutput();
     }
 };
 
@@ -64,32 +56,11 @@ function whisperBrainAddMessage(message) {
     whisperBrain.addAndRender(message);
 }
 
-// Función para limpiar el output
 function whisperBrainClear() {
     whisperBrain.clearMessages();
-    whisperBrain.renderFinalOutput();
 }
 
-// Exportar funciones globalmente si se requiere
 window.whisperBrain = whisperBrain;
 window.initWhisperBrain = initWhisperBrain;
 window.whisperBrainAddMessage = whisperBrainAddMessage;
 window.whisperBrainClear = whisperBrainClear;
-
-// Sincroniza el final output con whisperBrain cada 50ms
-typeof window !== 'undefined' && (function() {
-    let lastOutput = '';
-    function syncFinalOutput() {
-        const current = whisperBrain.getAllMessages();
-        if (current !== lastOutput) {
-            const outputDiv = document.getElementById('final-output-content');
-            if (outputDiv) {
-                outputDiv.textContent = current;
-            }
-            lastOutput = current;
-        }
-    }
-    window.startFinalOutputSync = function() {
-        setInterval(syncFinalOutput, 50);
-    };
-})(); 

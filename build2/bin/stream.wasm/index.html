@@ -21,7 +21,8 @@
                 <!-- Whisper Listener -->
                 <div id="chat-area-container" class="bg-white rounded-lg shadow-sm">
                     <div class="px-4 py-3 border-b border-gray-200">
-                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper asjjListener</h3>
+                        <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Whisper asjjListener
+                        </h3>
                     </div>
                     <div class="p-4">
                         <div class="flex gap-2 mb-4">
@@ -31,6 +32,7 @@
                             <button id="stop"
                                 class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
                                 disabled>Stop</button>
+
                         </div>
                         <div id="state-status" class="text-sm text-gray-600 mb-2"></div>
                         <div id="state-transcribed" class="text-sm text-gray-800"></div>
@@ -47,6 +49,7 @@
     <!-- Scripts -->
     <script type="text/javascript" src="whisper-brain.js"></script>
     <script type="text/javascript" src="helpers.js"></script>
+    <script type="text/javascript" src="components/formatter.js"></script>
     <script type="text/javascript" src="components/loader.js"></script>
     <script type='text/javascript'>
 
@@ -195,7 +198,7 @@
             context = null;
         }
 
-  
+
 
         function startRecording() {
             if (!context) {
@@ -327,7 +330,7 @@
                 if (instance) {
                     printTextarea("js: whisper initialized, instance: " + instance);
                 }
-                
+
             }
 
             if (!instance) {
@@ -352,6 +355,7 @@
                     // Aplicar el efecto de typewriting al texto
                     typeWriter(transcribed, messageContent);
                     // Agregar al whisper brain y guardar
+                    updateFinalOutput(transcribed);
                     whisperBrainAddMessage(transcribed);
                     scrollToBottom();
                 }
@@ -379,11 +383,11 @@
             type();
         }
 
-    // Function to scroll to the bottom of the chat
-    function scrollToBottom() {
-        const chatContainer = document.getElementById('whisper-chat');
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+        // Function to scroll to the bottom of the chat
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('whisper-chat');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
 
 
@@ -397,6 +401,17 @@
         function onStop() {
             stopRecording();
         }
+        function testWhisper() {
+            updateFinalOutput('hola buenas');
+        }
+
+
+        function updateFinalOutput(transcribed) {
+            const finalOutput = document.getElementById('final-output-content');
+            const element = TestFormatter.format(transcribed);
+            finalOutput.appendChild(element);
+        }
+
 
         if (typeof startFinalOutputSync === 'function') {
             startFinalOutputSync();
